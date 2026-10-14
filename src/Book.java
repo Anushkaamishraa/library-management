@@ -1,6 +1,6 @@
 /**
- * DSA Practical Assignment: Library Management System
- * Data Model for Book
+ * Smart Library Management System
+ * Core data model representing a cataloged library book entity.
  */
 public class Book {
     public int bookId;

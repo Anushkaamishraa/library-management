@@ -15,3 +15,6 @@ target/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Assignment and internal spec documents
+*.pdf

@@ -1,25 +1,26 @@
 import java.util.Scanner;
 
 /**
- * DSA Practical Assignment: Library Management System
- * Course: Data Structures & Algorithms (DSA)
- * Target Audience: Computer Science & Engineering Students
+ * Smart Library Management System
  *
- * Implements 5 key algorithmic tasks:
- * 1. Remove duplicate book records in-place (Two Pointers - O(N) time, O(1) space)
- * 2. Partial title search (Case-insensitive substring search - O(N * M) time)
- * 3. Selection sort by price (O(N^2) time, O(1) space, counts swaps)
- * 4. Fast price search (Binary Search - O(log N) time)
- * 5. Minimum consecutive books for research grant (Sliding Window - O(N) time, O(1) space)
+ * A high-performance, in-memory library management engine and catalog processor.
+ *
+ * Core Processing Modules:
+ * 1. In-Place Catalog De-duplication (Two-Pointer Technique - O(N) time, O(1) space)
+ * 2. Case-Insensitive Catalog Search Engine (O(N * M) time, O(1) space)
+ * 3. Price-Based Sorting Engine (Selection Sort with swap telemetry)
+ * 4. High-Performance Price Query (Binary Search - O(log N) time)
+ * 5. Optimal Consequential Resource Allocation (Sliding Window - O(N) time, O(1) space)
  */
 public class LibraryManagementSystem {
 
-    // ==========================================
-    // TASK 1: Remove Duplicate Books In-Place
-    // ==========================================
+    // =========================================================================
+    // MODULE 1: In-Place Catalog De-duplication
+    // =========================================================================
     /**
+     * Cleans up duplicate catalog entries scanned into the system.
      * Given an array of books sorted by bookId, removes duplicates in-place
-     * so that each book appears only once.
+     * so that each unique book appears only once.
      *
      * @param books Array of Book objects sorted by bookId
      * @param n     Initial number of elements in books array
@@ -46,16 +47,16 @@ public class LibraryManagementSystem {
         return uniqueIdx + 1;
     }
 
-    // ==========================================
-    // TASK 2: Partial Title Search
-    // ==========================================
+    // =========================================================================
+    // MODULE 2: Case-Insensitive Partial Title Search
+    // =========================================================================
     /**
-     * Searches through the array and finds all books whose titles contain
-     * the search word. The search is case-insensitive.
+     * Searches through the catalog and locates all books whose titles contain
+     * the specified query substring, regardless of letter casing.
      *
      * @param books Array of Book objects
-     * @param count Number of valid books in array
-     * @param query Search string
+     * @param count Number of active books in array
+     * @param query Search keyword/substring
      *
      * Time Complexity: O(count * length of title)
      * Space Complexity: O(1) auxiliary space
@@ -85,19 +86,18 @@ public class LibraryManagementSystem {
         }
     }
 
-    // ==========================================
-    // TASK 3: Sort by Price (Selection Sort)
-    // ==========================================
+    // =========================================================================
+    // MODULE 3: Price-Based Catalog Sorting
+    // =========================================================================
     /**
-     * Sorts the unique books in ascending order of price (cheapest book first)
-     * using Selection Sort (finds the minimum element in unsorted part and swaps).
-     * Counts and prints how many swaps were performed.
+     * Sorts the catalog in ascending order of price (most affordable books first)
+     * using Selection Sort and tracks total swap operations performed.
      *
      * @param books Array of Book objects
-     * @param count Number of valid books in array
+     * @param count Number of active books in array
      *
      * Time Complexity: O(N^2)
-     * Space Complexity: O(1)
+     * Space Complexity: O(1) auxiliary space
      */
     public static void sortByPrice(Book[] books, int count) {
         if (books == null || count <= 1) {
@@ -133,7 +133,7 @@ public class LibraryManagementSystem {
     }
 
     /**
-     * Helper version of selection sort that returns the number of swaps without printing.
+     * Internal helper to perform selection sort and return swap telemetry count.
      */
     public static int selectionSort(Book[] books, int count) {
         if (books == null || count <= 1) return 0;
@@ -155,20 +155,20 @@ public class LibraryManagementSystem {
         return swaps;
     }
 
-    // ==========================================
-    // TASK 4: Search by Price (Binary Search)
-    // ==========================================
+    // =========================================================================
+    // MODULE 4: High-Performance Exact Price Query (Binary Search)
+    // =========================================================================
     /**
-     * Searches for a book with an exact price targetPrice in O(log N) time
-     * using Binary Search on a price-sorted array.
+     * Performs a logarithmic time search for a book with an exact target price
+     * on an array pre-sorted by price.
      *
-     * @param books       Array of Book objects (sorted ascending by price)
-     * @param count       Number of valid books in array
+     * @param books       Array of Book objects sorted ascending by price
+     * @param count       Number of active books in array
      * @param targetPrice Exact price to search for
-     * @return 0-based index if found, or -1 if not found
+     * @return 0-based index if located, or -1 if not found
      *
      * Time Complexity: O(log N)
-     * Space Complexity: O(1)
+     * Space Complexity: O(1) auxiliary space
      */
     public static int searchByPrice(Book[] books, int count, double targetPrice) {
         if (books == null || count <= 0) {
@@ -192,22 +192,22 @@ public class LibraryManagementSystem {
         return -1;
     }
 
-    // ==========================================
-    // TASK 5: Sliding Window for Target Cost S
-    // ==========================================
+    // =========================================================================
+    // MODULE 5: Optimal Consecutive Allocation Engine (Sliding Window)
+    // =========================================================================
     /**
-     * Finds the minimum length of a contiguous subarray of books whose total price
-     * meets or exceeds targetCost (S).
+     * Determines the minimum number of consecutive shelf books whose combined
+     * monetary value meets or exceeds the required target budget/cost.
      *
-     * Uses a Sliding Window (Two Pointers) approach:
-     * - Expands window with right pointer.
-     * - Whenever currentSum >= targetCost, records window length and contracts
-     *   window with left pointer.
+     * Employs an optimal Sliding Window (Two Pointers) algorithm:
+     * - Expands the search window by advancing the right pointer.
+     * - Once currentSum >= targetCost, records the minimal span length and contracts
+     *   from the left pointer to find the most compact contiguous set.
      *
-     * @param books      Array of Book objects
-     * @param count      Number of valid books in array
-     * @param targetCost Target research grant amount S
-     * @return Minimum length of contiguous books >= targetCost, or 0 if none exists.
+     * @param books      Array of Book objects on shelf
+     * @param count      Number of active books in array
+     * @param targetCost Minimum required combined monetary value
+     * @return Minimum length of contiguous books meeting targetCost, or 0 if unreachable.
      *
      * Time Complexity: O(N)
      * Space Complexity: O(1) auxiliary space
@@ -238,11 +238,11 @@ public class LibraryManagementSystem {
     }
 
     /**
-     * Helper to print detailed explanations of the qualifying minimal contiguous windows.
+     * Helper to display detailed breakdown of eligible contiguous shelf windows.
      */
     public static void printSlidingWindowExplanation(Book[] books, int count, double targetCost, int minLength) {
         if (minLength <= 0 || books == null || count < minLength) {
-            System.out.println("No contiguous subarray meets the target cost of Rs. " + targetCost);
+            System.out.println("No contiguous shelf sequence meets the target budget of Rs. " + targetCost);
             return;
         }
 
@@ -269,12 +269,11 @@ public class LibraryManagementSystem {
     }
 
     /**
-     * Executes the exact test case provided in the assignment PDF.
+     * Runs the standard system demonstration pipeline.
      */
     public static void runSampleTestCase() {
         System.out.println("===============================================================");
-        System.out.println("  DSA PRACTICAL ASSIGNMENT: LIBRARY MANAGEMENT SYSTEM");
-        System.out.println("  Execution of Assignment Sample Test Case");
+        System.out.println("          SMART LIBRARY MANAGEMENT SYSTEM - PIPELINE           ");
         System.out.println("===============================================================\n");
 
         // Initial Input Array (6 Books with 1 Duplicate)
@@ -343,12 +342,12 @@ public class LibraryManagementSystem {
         System.out.println("Minimum Consecutive Books Needed: " + minBooks);
         printSlidingWindowExplanation(books, uniqueCount, targetGrant, minBooks);
         System.out.println("===============================================================");
-        System.out.println("  SAMPLE TEST CASE COMPLETED SUCCESSFULLY!");
+        System.out.println("       SYSTEM DEMONSTRATION COMPLETED SUCCESSFULLY!            ");
         System.out.println("===============================================================\n");
     }
 
     /**
-     * Interactive CLI mode for testing custom queries and books.
+     * Interactive CLI mode for real-time catalog management.
      */
     public static void runInteractiveMenu(Scanner sc) {
         Book[] books = new Book[100];
@@ -365,14 +364,14 @@ public class LibraryManagementSystem {
         while (running) {
             System.out.println("\n===== Smart Library Management Menu =====");
             System.out.println("Current Books Count: " + count);
-            System.out.println("1. Display all books");
-            System.out.println("2. Task 1: Remove Duplicate Books (In-Place)");
-            System.out.println("3. Task 2: Search Books by Title (Case-Insensitive)");
-            System.out.println("4. Task 3: Sort Books by Price (Selection Sort)");
-            System.out.println("5. Task 4: Fast Search by Exact Price (Binary Search)");
-            System.out.println("6. Task 5: Find Min Consecutive Books for Grant S (Sliding Window)");
-            System.out.println("7. Add a new book");
-            System.out.println("8. Run Assignment Sample Test Case");
+            System.out.println("1. Display all cataloged books");
+            System.out.println("2. Remove duplicate books (In-Place)");
+            System.out.println("3. Search books by partial title (Case-Insensitive)");
+            System.out.println("4. Sort books by price (Ascending)");
+            System.out.println("5. Fast search by exact price (Binary Search)");
+            System.out.println("6. Find minimum consecutive books for target budget (Sliding Window)");
+            System.out.println("7. Add a new book to catalog");
+            System.out.println("8. Run automated system demonstration");
             System.out.println("9. Exit");
             System.out.print("Select an option (1-9): ");
 
@@ -409,14 +408,14 @@ public class LibraryManagementSystem {
                         if (idx != -1) {
                             System.out.println("Book found at index " + idx + ": " + books[idx]);
                         } else {
-                            System.out.println("No book found with price Rs. " + p + ". Note: Ensure books are sorted first!");
+                            System.out.println("No book found with price Rs. " + p + ". Note: Ensure catalog is sorted first!");
                         }
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid price input.");
                     }
                     break;
                 case "6":
-                    System.out.print("\nEnter research grant amount S: ");
+                    System.out.print("\nEnter target budget / research grant amount (Rs.): ");
                     try {
                         double targetS = Double.parseDouble(sc.nextLine().trim());
                         int minLen = minBooksForTargetCost(books, count, targetS);
@@ -428,7 +427,7 @@ public class LibraryManagementSystem {
                     break;
                 case "7":
                     if (count >= books.length) {
-                        System.out.println("Array is full.");
+                        System.out.println("Catalog array is full.");
                         break;
                     }
                     try {
@@ -465,9 +464,9 @@ public class LibraryManagementSystem {
             runInteractiveMenu(sc);
             sc.close();
         } else {
-            // Default run executes the assignment's exact sample test case
+            // Default run executes standard demonstration pipeline
             runSampleTestCase();
-            System.out.println("Tip: Run with flag '--interactive' to launch the interactive terminal menu!");
+            System.out.println("Tip: Pass '--interactive' flag to launch the interactive terminal menu!");
         }
     }
 }
