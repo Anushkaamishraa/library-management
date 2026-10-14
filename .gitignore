@@ -1,0 +1,17 @@
+# Compiled class files
+*.class
+bin/
+out/
+target/
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Operating System files
+.DS_Store
+Thumbs.db
+Desktop.ini
