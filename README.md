@@ -25,13 +25,27 @@ A high-performance in-memory library management engine and catalog processor bui
 
 The system is organized into modular processing units operating on cataloged `Book` entities:
 
-```mermaid
-flowchart LR
-    A[Raw Scanned Books] -->|Module 1: In-Place Two Pointers| B(De-duplicated Catalog)
-    B -->|Module 2: Substring Match| C[Title Search Results]
-    B -->|Module 3: Selection Sort| D(Price-Sorted Catalog)
-    D -->|Module 4: Binary Search| E[Exact Price Lookup]
-    D -->|Module 5: Sliding Window| F[Optimal Shelf Allocation]
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│                          Raw Scanned Books                             │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼ [Module 1: In-Place De-duplication]
+┌────────────────────────────────────────────────────────────────────────┐
+│                        De-duplicated Catalog                           │
+└─────────────┬────────────────────────────────────────────┬─────────────┘
+              │                                            │
+ [Module 2]   │                                            ▼ [Module 3: Price Sort]
+ Partial      │                               ┌──────────────────────────┐
+ Title Search │                               │   Price-Sorted Catalog   │
+              │                               └──────┬────────────┬──────┘
+              │                                      │            │
+              ▼                                      ▼            ▼
+   ┌──────────────────────┐               ┌────────────┐┌──────────────────────────┐
+   │ Substring Matches    │               │ Binary     ││ Sliding Window           │
+   │ (Case-Insensitive)   │               │ Search     ││ Consecutive Allocation   │
+   └──────────────────────┘               │ (O(log N)) ││ (Target Grant S)         │
+                                          └────────────┘└──────────────────────────┘
 ```
 
 ### Module Specifications & Algorithmic Complexity
